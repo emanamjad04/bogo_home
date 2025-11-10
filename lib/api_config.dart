@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
 class ApiConfig {
   final Map<String, String> baseUrls;
   final Map<String, dynamic> endpoints;
@@ -20,7 +24,11 @@ class ApiConfig {
     });
   }
 
-  // Auth Endpoints
+  static Future<ApiConfig> loadFromAssets(String s) async {
+    final jsonString = await rootBundle.loadString('assets/configs/api_config.json');
+    final jsonData = json.decode(jsonString);
+    return ApiConfig.fromJson(jsonData);
+  }
   String get homepageData => _buildUrl(endpoints['home']['getHomepageData']);
 
 }

@@ -1,8 +1,10 @@
 {
   "baseUrls": {
-    "v2": "https://staging2.rtapi.bogo.pk/prod-staging/api-v2"
+    "v1": "https://staging2.rtapi.bogo.pk",
+    "v2": "https://staging2.rtapi.bogo.pk/api-v2"
   },
   "home": {
     "getHomepageData": "{{v2}}/api/user/home"
-  }
+  },
+  "banners" : "{{v1}}/api/v1/banner"
 }

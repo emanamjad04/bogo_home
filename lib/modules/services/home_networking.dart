@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:bogo_home/modules/services/home_models.dart';
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -32,10 +35,9 @@ Future<Position> getUserCurrentLocation() async{
 
   return await Geolocator.getCurrentPosition();
 }
-}
 
 
-Future<void> fetchHomepageData(ApiConfig apiConfig) async {
+Future<HomeData?> fetchHomepageData(ApiConfig apiConfig) async {
   Map<String, dynamic> body = {
     "platform": 'android',
     "limit": 10,
@@ -49,12 +51,47 @@ Future<void> fetchHomepageData(ApiConfig apiConfig) async {
   };
   final url = apiConfig.homepageData;
   final uri = Uri.parse(url);
+  print(uri.toString());
+  // try{
+    final response = await Dio().post(uri.toString(),data: body,);
+    if (response.statusCode == 200) {
+      final data =response.data;
+      Map<String , dynamic> dataMap={
+        'banners': data['data']['banners']['banners'],
+        'swimlanes': data['data']['swimlanes'],
+        'groupDeals': data['data']['groupDeals'],
+        'categories': data['data']['categories']['categories'],
+        'nearbyBrands': data['data']['nearbyEntities']['entities'],
+        'featuredBrands': data['data']['featuredEntities']['entities'],
+        'featuredGroupDeal': data['data']['featuredGroupDeal'],
+      };
+      // print('success:');
+      // print(data['data']['banners']['banners'].runtimeType);
+      // print('featuredGroupDeal');
+      // print(data['data']['featuredGroupDeal']);
+      // print('swimlanes');
+      // print(data['data']['swimlanes']);
+      // print('nearbyEntities');
+      // print(data['data']['nearbyEntities']['entities'].runtimeType);
+      // print('featuredBrands');
+      // print(data['data']['featuredEntities']['entities'].runtimeType);
+      // print('groupDeals');
+      // print(data['data']['groupDeals']);
+      // print('categories');
+      // print(data['data']['categories']['categories'].runtimeType);
+        final homeData=HomeData.fromMap(dataMap);
+        // print(homeData);
+      return homeData;
+    } else {
+      throw Exception('Failed: ${response.statusCode}');
+    }
+  // }catch(e){
+  //   print('Exception here:$e');
+  // }
+  return null;
 
-  final response = await Dio().request(uri.toString(),data: body);
-  if (response.statusCode == 200) {
-    print('success: ${response.data}');
-  } else {
-    throw Exception('Failed: ${response.statusCode}');
-  }
 }
+}
+
+
 
