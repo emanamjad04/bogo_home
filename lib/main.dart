@@ -3,16 +3,22 @@ import 'package:bogo_home/modules/components/carousel.dart';
 import 'package:bogo_home/modules/services/home_models.dart';
 import 'package:bogo_home/modules/services/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import 'modules/components/small_card.dart';
 import 'modules/services/home_networking.dart';
 
 void main() {
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: home(),
-    )
+      ScreenUtilInit(
+      designSize: Size(375, 812),
+  builder: (context, child) {
+  return MaterialApp(
+  debugShowCheckedModeBanner: false,
+  home: home(),
+  );}
+      )
   );
 }
 class home extends StatefulWidget {
@@ -24,6 +30,7 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   late Future<List<BannerInfo>> banners;
+
   @override
   void initState() {
     banners=getdata();
@@ -41,15 +48,22 @@ class _homeState extends State<home> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body:FutureBuilder<List<BannerInfo>>(
-        future: banners,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return BannerCarousel(banners: snapshot.data!);
-        },
-      ),
-    );
+      body:SmallCard(),);
   }
 }
+// CustomScrollView(
+// slivers:[
+// SliverToBoxAdapter(
+// child: FutureBuilder<List<BannerInfo>>(
+// future: banners,
+// builder: (context, snapshot) {
+// if (!snapshot.hasData) {
+// return const Center(child: CircularProgressIndicator());
+// }
+// return BannerCarousel(banners: snapshot.data!);
+// },
+// ),
+//
+// )
+// ]
+// )
