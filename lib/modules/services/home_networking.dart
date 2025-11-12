@@ -65,8 +65,8 @@ Future<HomeData?> fetchHomepageData(ApiConfig apiConfig) async {
         'featuredBrands': data['data']['featuredEntities']['entities'],
         'featuredGroupDeal': data['data']['featuredGroupDeal'],
       };
-      // print('success:');
-      // print(data['data']['banners']['banners'].runtimeType);
+      print('success:');
+      print(data['data']);
       print('featuredGroupDeal');
       print(data['data']['featuredGroupDeal']);
       // print('swimlanes');
@@ -75,10 +75,10 @@ Future<HomeData?> fetchHomepageData(ApiConfig apiConfig) async {
       // print(data['data']['nearbyEntities']['entities'].runtimeType);
       // print('featuredBrands');
       // print(data['data']['featuredEntities']['entities'].runtimeType);
-      print('groupDeals');
-      print(data['data']['groupDeals']);
-      // print('categories');
-      // print(data['data']['categories']['categories'].runtimeType);
+      // print('groupDeals');
+      // print(data['data']['groupDeals']);
+      print('categories');
+      print(data['data']['categories']['categories']);
         final homeData=HomeData.fromMap(dataMap);
         // print(homeData);
       return homeData;

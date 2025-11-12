@@ -1,4 +1,5 @@
 import 'package:bogo_home/modules/services/home_models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +8,11 @@ class Category extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Categories> list= List.generate(10, (i){
-      return Categories(id: i, name: 'categories$i',imageUrl:'assets/img.png' );
+    List<Categories> list= List.generate(7, (i){
+      return Categories(id: i, name: 'Food',imageUrl:'https://d1o48iks0ndije.cloudfront.net/category/food_1604916199108_223.png' );
     });
-    return ListView.builder(
+    return ListView.separated(
+
     padding: EdgeInsets.all(5),
       scrollDirection: Axis.horizontal,
       itemCount: list.length,
@@ -20,8 +22,10 @@ class Category extends StatelessWidget {
         child: Column(
           children: [
             CircleAvatar(
-
-              backgroundImage:AssetImage(item.imageUrl!),
+              radius: 28,
+              backgroundImage:CachedNetworkImageProvider(
+                 item.imageUrl!,
+              ),
             ),
             Container(
                 width: 50,
@@ -32,7 +36,7 @@ class Category extends StatelessWidget {
                 textAlign: TextAlign.center,))
           ],
         ),);
-        }
+        }, separatorBuilder: (BuildContext context, int index) => SizedBox(width: 10,)
     );
   }
 }

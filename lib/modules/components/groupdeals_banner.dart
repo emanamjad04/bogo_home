@@ -16,16 +16,17 @@ class GroupdealsBanner extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Stack(
-        fit: StackFit.passthrough,
+        fit: StackFit.loose,
         children: [
           Container(
-            clipBehavior: Clip.hardEdge,
+            // clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
-                // color: Colors.pink,
+                color: Colors.pink,
                 borderRadius: BorderRadius.circular(6)
             ),
             child: CachedNetworkImage(
               imageUrl: deal.imageUrl!,
+              // fit: BoxFit.cover,
             ),
           ),
           Positioned.fill(
