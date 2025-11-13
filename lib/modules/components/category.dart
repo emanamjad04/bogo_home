@@ -13,12 +13,12 @@ class Category extends StatelessWidget {
     });
     return ListView.separated(
 
-    padding: EdgeInsets.all(5),
+    padding: EdgeInsets.only(left: 16),
       scrollDirection: Axis.horizontal,
       itemCount: list.length,
         itemBuilder: (context,index){
         final item = list[index];
-        return Padding(padding: EdgeInsets.all(8),
+        return Padding(padding: EdgeInsets.only(right: 8),
         child: Column(
           children: [
             CircleAvatar(

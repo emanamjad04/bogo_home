@@ -1,5 +1,7 @@
+import 'package:bogo_home/modules/components/cover.dart';
 import 'package:bogo_home/modules/components/eretail.dart';
 import 'package:bogo_home/modules/components/yellow_tag.dart';
+import 'package:bogo_home/modules/services/home_models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,13 +12,15 @@ import '../../core/constants/theme_colors.dart';
 import 'cardinfo_text.dart';
 
 class SmallCard extends StatelessWidget {
-  const SmallCard({Key? key}) : super(key: key);
+  final GroupDeal obj;
+  const SmallCard({required this.obj,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final brand =obj.brandEntities.first;
     return Container(
-      margin: EdgeInsets.all(60),
       width: 160,
+      margin: EdgeInsets.only(bottom: 9),
       // clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -35,16 +39,23 @@ class SmallCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Image.asset('assets/img.png',
-              width: double.infinity,
-              height: 129,
-                fit: BoxFit.cover,
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(7)),
+                child: Image.network(
+                  brand.covers?.isNotEmpty == true ? brand.covers!.first : '',
+                  width: double.infinity,
+                  height: 129,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) =>
+                  const Icon(Icons.image_not_supported, size: 80),
+                ),
               ),
-              Positioned(
+              if(brand.placeholderText!.isNotEmpty)Positioned(
                 top: 10,
-                  child: YellowTag(text: 'Top Brand')
+                  child: YellowTag(text:brand.placeholderText!.first)
               ),
-              Positioned(
+              if(brand.isEretail)
+                 Positioned(
                 left: 5.r,
                     bottom: 5.r,
                     child: eRetail()
@@ -54,7 +65,7 @@ class SmallCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 9),
-            child: Text('Del Frio',
+            child: Text(brand.name,
             style: TextStyle(
               fontWeight: FontWeight.w600,
             ),),
@@ -67,19 +78,19 @@ class SmallCard extends StatelessWidget {
                 SvgPicture.asset(homepageSvg.bicycle,color: ThemeColor.primary,
                 ),
                 SizedBox(width: 5,),
-                CardinfoText(text: '120 Km',size: 12,color: ThemeColor.fontBlack,),
+                CardinfoText(text:brand.distance.toString(),size: 12,color: ThemeColor.fontBlack,),
                 SizedBox(width: 12,),
                 SvgPicture.asset(homepageSvg.food,color: ThemeColor.primary,
                 ),
                 SizedBox(width: 5,),
-                CardinfoText(text: 'food',size: 12,color: ThemeColor.fontBlack,)
+                CardinfoText(text:brand.categoryNames![0],size: 12,color: ThemeColor.fontBlack,)
               ],
             ),
           ),
           SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 9),
-            child: CardinfoText(text: 'food',size: 10, fontWeight: FontWeight.w300,color: ThemeColor.primary,),
+            child: CardinfoText(text: brand.tags!.join(' • '),color: ThemeColor.primary,),
           )
         ],
       ),

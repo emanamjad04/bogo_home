@@ -4,16 +4,24 @@ import 'package:bogo_home/core/constants/assets_path.dart';
 import 'package:bogo_home/core/constants/theme_colors.dart';
 import 'package:bogo_home/modules/components/cardinfo_text.dart';
 import 'package:bogo_home/modules/components/cover.dart';
+import 'package:bogo_home/modules/services/home_models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CardLarge extends StatelessWidget {
-  const CardLarge({Key? key}) : super(key: key);
+  final BrandEntity obj;
+  const CardLarge({required this.obj,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        Positioned(
+          top: 10,
+            right: 10,
+            child:Icon(Icons.abc,color: ThemeColor.primary,)
+        ),
         cover(),
         Positioned(
             bottom: 8,
@@ -46,7 +54,7 @@ class CardLarge extends StatelessWidget {
               Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/img.png'),
+                    // backgroundImage:CachedNetworkImageProvider(obj.),
 
                   ),
                   SizedBox(width: 6,),

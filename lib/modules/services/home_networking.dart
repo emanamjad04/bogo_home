@@ -57,22 +57,23 @@ Future<HomeData?> fetchHomepageData(ApiConfig apiConfig) async {
     if (response.statusCode == 200) {
       final data =response.data;
       Map<String , dynamic> dataMap={
-        'banners': data['data']['banners']['banners'],
-        'swimlanes': data['data']['swimlanes'],
-        'groupDeals': data['data']['groupDeals'],
-        'categories': data['data']['categories']['categories'],
-        'nearbyBrands': data['data']['nearbyEntities']['entities'],
-        'featuredBrands': data['data']['featuredEntities']['entities'],
-        'featuredGroupDeal': data['data']['featuredGroupDeal'],
+        'banners': data['data']['banners']['banners'],//banners
+        'trendingDeals': data['data']['swimlanes'][0]['groupDealEntities'], //trending deals
+        'hotDeals': data['data']['swimlanes'][1]['groupDealEntities'], //hot deals
+        'groupDeals': data['data']['groupDeals'],// fine dine thingsss
+        'categories': data['data']['categories']['categories'],// all food beauty
+        'nearbyBrands': data['data']['nearbyEntities']['entities'], //bottom brands
+        'featuredBrands': data['data']['featuredEntities']['entities'], //feature store
+        'featuredGroupDeal': data['data']['featuredGroupDeal'],// have you had lunch
       };
       print('success:');
       print(data['data']);
       print('featuredGroupDeal');
-      print(data['data']['featuredGroupDeal']);
-      // print('swimlanes');
-      // print(data['data']['swimlanes']);
-      // print('nearbyEntities');
-      // print(data['data']['nearbyEntities']['entities'].runtimeType);
+      print(data['data']['featuredGroupDeal'].runtimeType);
+      print('swimlanes');
+      print(data['data']['swimlanes'][0]);
+      print('nearbyEntities');
+      print(data['data']['nearbyEntities']['entities'].runtimeType);
       // print('featuredBrands');
       // print(data['data']['featuredEntities']['entities'].runtimeType);
       // print('groupDeals');
@@ -80,7 +81,7 @@ Future<HomeData?> fetchHomepageData(ApiConfig apiConfig) async {
       print('categories');
       print(data['data']['categories']['categories']);
         final homeData=HomeData.fromMap(dataMap);
-        // print(homeData);
+        print(homeData);
       return homeData;
     } else {
       throw Exception('Failed: ${response.statusCode}');

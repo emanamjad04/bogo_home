@@ -174,7 +174,7 @@ class EntityBranch {
   double? latitude;
   double? longitude;
   double? distance;
-  List<String> contactNo;
+  List<String>? contactNo;
 
   EntityBranch({
     required this.id,
@@ -182,9 +182,9 @@ class EntityBranch {
     required this.address,
     required this.latitude,
     required this.distance,
-    required this.isEretail,
+     this.isEretail=false,
     required this.longitude,
-    required this.contactNo,
+     this.contactNo,
   });
 
   factory EntityBranch.fromJson(Map<String, dynamic> json) => EntityBranch(
@@ -256,10 +256,10 @@ class GroupDeal {
     imageUrl: json['photoUrl'] as String?,
     colorCode: json['fontColor'] as String,
     innerBannerPhotoUrl: json['innerBannerPhotoUrl'] as String?,
-    brandEntities: (json['groupDealEntities'] as List<dynamic>?)?.map((e)=> BrandEntity.fromJson(e)).toList()??[]
-    // brandEntities: json.containsKey('groupDealEntities')
-    //     ? List.from(.map((x) => BrandEntity.fromJson(x)))
-    //     : [],
+    // brandEntities: (json['groupDealEntities'] as List<dynamic>?)?.map((e)=> BrandEntity.fromJson(e)).toList()??[]
+    brandEntities: json.containsKey('groupDealEntities')
+                ? List.from(json['groupDealEntities'].map((x) => BrandEntity.fromJson(x)))
+                : [],
   );
 
   Color get color {
@@ -273,7 +273,8 @@ class HomeData {
   final GroupDeal? featureGroupDeals;
   final List<GroupDeal> groupDeals;
   final List<Categories> categories;
-  final List<GroupDeal> TrendyDeals;
+  final List<BrandEntity> TrendyDeals;
+  final List<BrandEntity> hotDeals;
   final List<BrandEntity> featureBrands;
   final List<BrandEntity> nearbyBrands;
   HomeData({required this.banners,
@@ -281,6 +282,7 @@ class HomeData {
       required this.groupDeals,
       required this.categories,
       required this.TrendyDeals,
+    required this.hotDeals,
   required this.featureBrands, required this.nearbyBrands
   });
 
@@ -298,15 +300,18 @@ class HomeData {
         categories: (json['categories'] as List? ?? [])
             .map((e) => Categories.fromJson(e as Map<String, dynamic>))
             .toList(),
-        TrendyDeals:(json['swimlanes'] as List? ?? [])
-            .map((e) => GroupDeal.fromJson(e as Map<String, dynamic>))
+        TrendyDeals:(json['trendingDeals'] as List? ?? [])
+            .map((e) => BrandEntity.fromJson(e as Map<String, dynamic>))
             .toList(),
         featureBrands: (json['featuredBrands'] as List? ?? [])
             .map((e) => BrandEntity.fromJson(e as Map<String, dynamic>))
             .toList(),
         nearbyBrands:  (json['nearbyBrands'] as List? ?? [])
             .map((e) => BrandEntity.fromJson(e as Map<String, dynamic>))
-            .toList()
+            .toList(),
+        hotDeals:(json['hotDeals'] as List? ?? [])
+            .map((e) => BrandEntity.fromJson(e as Map<String, dynamic>))
+            .toList(),
     );
   }
 }

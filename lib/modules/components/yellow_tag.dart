@@ -12,7 +12,7 @@ class YellowTag extends StatelessWidget {
         horizontal: 4,
     ),
     decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(4),
+    borderRadius: BorderRadius.only(topRight: Radius.circular(4),bottomRight: Radius.circular(4)),
     color:ThemeColor.lightPrimary
     ),
     child: Text(text,style: TextStyle(
